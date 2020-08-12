@@ -61,6 +61,8 @@ struct Point
 
 #define WHITE Color{255,255,255,255}
 #define RED   Color{255,0,0,255}
+#define GREEN Color{0,255,0,255}
+#define BLUE  Color{0,0,255,255}
 #define TOP 800
 #define RIGHT 800
 #endif // !_GEOMETRY_H_

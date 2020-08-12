@@ -5,6 +5,7 @@
 #include "GLDrawing.h"
 #include "Model.h"
 #include <ostream>
+#include "tgaimage.h"
 //std::ostream log(".\\output.log");
 
 void Display(void)
@@ -54,7 +55,9 @@ int main(int argc, char **argv)
     //line(Vec2i(0, 0), Vec2i(400, 400), WHITE);
 
     Model object("obj/african_head.obj");
-    object.Draw(WHITE);
+    //object.Draw(WHITE);
+	object.LoadTexture("obj/african_head_diffuse.tga");
+	object.RenderTexture();
 
     glutMainLoop();
     return 0;
