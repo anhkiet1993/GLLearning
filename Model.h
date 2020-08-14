@@ -19,6 +19,8 @@ public:
 
 	void RenderTexture();
 
+	void RenderInScence();
+
 private:
     struct face_t
     {
@@ -39,8 +41,9 @@ private:
 
     std::vector<std::string> extract_string(std::string, char);
 
-	void triangle(Vec3i p0, Vec3i p1, Vec3i p3, Color c);
+	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Color c);
 	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i vt2);
+	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i vt2, float intensity);
 };
 
 #endif // !_MODEL_H_

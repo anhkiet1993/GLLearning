@@ -113,11 +113,38 @@ void Model::RenderTexture()
 		Vec3i p1((m_verts[face.vert_idx[1] - 1].x + 1) * 400, (m_verts[face.vert_idx[1] - 1].y + 1) * 400, (m_verts[face.vert_idx[1] - 1].z + 1) * 400);
 		Vec3i p2((m_verts[face.vert_idx[2] - 1].x + 1) * 400, (m_verts[face.vert_idx[2] - 1].y + 1) * 400, (m_verts[face.vert_idx[2] - 1].z + 1) * 400);
 
+		Vec2i vt0((m_vert_texs[face.tex_idx[0] - 1].x) * m_texture.get_width()/2, (m_vert_texs[face.tex_idx[0] - 1].y) * m_texture.get_height()/2);
+		Vec2i vt1((m_vert_texs[face.tex_idx[1] - 1].x) * m_texture.get_width()/2, (m_vert_texs[face.tex_idx[1] - 1].y) * m_texture.get_height()/2);
+		Vec2i vt2((m_vert_texs[face.tex_idx[2] - 1].x) * m_texture.get_width()/2, (m_vert_texs[face.tex_idx[2] - 1].y) * m_texture.get_height()/2);
+
+		triangle(p0, p1, p2, vt0, vt1, vt2);
+	}
+}
+
+void Model::RenderInScence()
+{
+	for (auto face : m_faces)
+	{
+		Vec3f p0 = m_verts[face.vert_idx[0] - 1];
+		Vec3f p1 = m_verts[face.vert_idx[1] - 1];
+		Vec3f p2 = m_verts[face.vert_idx[2] - 1];
+
 		Vec2i vt0((m_vert_texs[face.tex_idx[0] - 1].x) * m_texture.get_width(), (m_vert_texs[face.tex_idx[0] - 1].y) * m_texture.get_height());
 		Vec2i vt1((m_vert_texs[face.tex_idx[1] - 1].x) * m_texture.get_width(), (m_vert_texs[face.tex_idx[1] - 1].y) * m_texture.get_height());
 		Vec2i vt2((m_vert_texs[face.tex_idx[2] - 1].x) * m_texture.get_width(), (m_vert_texs[face.tex_idx[2] - 1].y) * m_texture.get_height());
 
-		triangle(p0, p1, p2, vt0, vt1, vt2);
+		Vec3f normal = (p2 - p0) ^ (p1 - p0);
+		float intensity = normal.normalize() * light_dir;
+
+		p0 = transform(p0, 4);
+		p1 = transform(p1, 4);
+		p2 = transform(p2, 4);
+
+		Vec3i pt0((p0.x + 1) * 400, (p0.y + 1) * 400, p0.z * 400);
+		Vec3i pt1((p1.x + 1) * 400, (p1.y + 1) * 400, p1.z * 400);
+		Vec3i pt2((p2.x + 1) * 400, (p2.y + 1) * 400, p2.z * 400);
+
+		triangle(pt0, pt1, pt2, vt0, vt1, vt2, intensity);
 	}
 }
 
@@ -192,6 +219,45 @@ void Model::triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i v
 						Color point_color = GetColor(color_coor);
 
 						Point pt = { Vec2i(i, j), Color{(unsigned char)(point_color.r * intensity), (unsigned char)(point_color.g * intensity), (unsigned char)(point_color.b * intensity), point_color.a} };
+						point(pt);
+					}
+				}
+			}
+		}
+	}
+}
+
+void Model::triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i vt2, float intensity)
+{
+	Vec2i top_left, bot_right;
+
+	top_left.x = std::max(std::min(p0.x, std::min(p1.x, p2.x)), 0);
+	top_left.y = std::max(std::min(p0.y, std::min(p1.y, p2.y)), 0);
+
+	bot_right.x = std::min(std::max(p0.x, std::max(p1.x, p2.x)), RIGHT);
+	bot_right.y = std::min(std::max(p0.y, std::max(p1.y, p2.y)), RIGHT);
+
+
+	for (int i = top_left.x; i < bot_right.x; i++)
+	{
+		for (int j = top_left.y; j < bot_right.y; j++)
+		{
+			Vec3f bary_coor = barycentric(Vec2i(p0.x, p0.y), Vec2i(p1.x, p1.y), Vec2i(p2.x, p2.y), Vec2i(i, j));
+			if (is_inside(bary_coor))
+			{
+				int z = interpolate(p0.z, p1.z, p2.z, bary_coor);
+				if (z > gZbuffer[i][j])
+				{
+					gZbuffer[i][j] = z;
+					if (intensity > 0.f)
+					{
+						Vec2i color_coor;
+						color_coor.x = interpolate(vt0.x, vt1.x, vt2.x, bary_coor);
+						color_coor.y = interpolate(vt0.y, vt1.y, vt2.y, bary_coor);
+
+						Color point_color = GetColor(color_coor);
+
+						Point pt = { Vec2i(i, j), Color{ (unsigned char)(point_color.r * intensity), (unsigned char)(point_color.g * intensity), (unsigned char)(point_color.b * intensity), point_color.a } };
 						point(pt);
 					}
 				}

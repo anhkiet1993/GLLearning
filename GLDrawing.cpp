@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdlib.h> 
 #include <array>
+#include "Matrix.h"
 
 std::array<std::array<int, TOP>, RIGHT> gZbuffer; //buffer[RIGHT][TOP]
 std::vector< Point > points;
@@ -65,6 +66,24 @@ int compute_z(Vec3i p1, Vec3i p2, Vec3i p3, Vec2i P)
 int interpolate(int n0, int n1, int n2, Vec3f bary_coor)
 {
 	return bary_coor.u * n0 + bary_coor.v * n1 + bary_coor.w * n2;
+}
+
+Vec3f transform(Vec3f p0, int c)
+{
+	float array_m[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,-1.f/c,1 };
+	Matrix<float> transform_matrix(4, 4, array_m);
+
+	float fmp0[] = { p0.x,p0.y,p0.z,1 };
+	Matrix<float> mp0(1, 4, fmp0);
+
+	Matrix<float>rel = transform_matrix*mp0;
+
+	Vec3f p_t(rel[0][0] / rel[3][0], rel[1][0] / rel[3][0], rel[2][0] / rel[3][0]);
+	//p_t.x = (float)p0.x / (1.f - (float)p0.z / c);
+	//p_t.y = (float)p0.y / (1.f - (float)p0.z / c);
+	//p_t.z = (float)p0.z / (1.f - (float)p0.z / c);
+
+	return p_t;
 }
 
 void InitZbuffer()

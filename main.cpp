@@ -1,11 +1,14 @@
 #include <cstdlib>
 #include <glut.h>
 #include <vector>
+#include "Matrix.h"
 #include "geometry.h"
 #include "GLDrawing.h"
 #include "Model.h"
 #include <ostream>
 #include "tgaimage.h"
+
+
 //std::ostream log(".\\output.log");
 
 void Display(void)
@@ -41,23 +44,35 @@ void Reshape(int w, int h)
 
 int main(int argc, char **argv)
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 
-    glutInitWindowSize(RIGHT, TOP);
-    glutCreateWindow("Random Points");
+	glutInitWindowSize(RIGHT, TOP);
+	glutCreateWindow("Random Points");
 
-    glutDisplayFunc(Display);
-    glutReshapeFunc(Reshape);
+	glutDisplayFunc(Display);
+	glutReshapeFunc(Reshape);
 
-    InitZbuffer();
+	InitZbuffer();
 
-    //line(Vec2i(0, 0), Vec2i(400, 400), WHITE);
+	//line(Vec2i(0, 0), Vec2i(400, 400), WHITE);
 
-    Model object("obj/african_head.obj");
-    //object.Draw(WHITE);
+	Model object("obj/african_head.obj");
+	//object.Draw(WHITE);
 	object.LoadTexture("obj/african_head_diffuse.tga");
-	object.RenderTexture();
+	object.RenderInScence();
+
+	//Matrix<int> m1(2, 2);
+	int m1a[] = { 1,2,3,4,5,6 };
+	Matrix<int> m1(3, 2, m1a);
+
+	int m2a[] = { 7,8,9,10,11,12 };
+	Matrix<int> m2(2, 3, m2a);
+
+	Matrix<int> m3 = m1*m2;
+
+	int a = m3[0][0];
+
 
     glutMainLoop();
     return 0;
