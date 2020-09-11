@@ -10,5 +10,6 @@
  int compute_z(Vec3i p1, Vec3i p2, Vec3i p3, Vec3f bary_coor);
  int compute_z(Vec3i p1, Vec3i p2, Vec3i p3, Vec2i P);
  int interpolate(int n0, int n1, int n2, Vec3f bary_coor);
- Vec3f transform(Vec3f p0, int c);
+ float interpolate_f(float n0, float n1, float n2, Vec3f bary_coor);
+ Vec3f transform(Vec3f p0);
  void InitZbuffer();

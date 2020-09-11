@@ -8,6 +8,10 @@
 std::array<std::array<int, TOP>, RIGHT> gZbuffer; //buffer[RIGHT][TOP]
 std::vector< Point > points;
 Vec3f light_dir(0, 0, -1);
+Vec3f camera(0, 0, 4);
+Vec3f eye(1, 1, 3);
+Vec3f center(0, 0, 0);
+Vec3f up(0, 0, 1);
 
 void point(Point p)
 {
@@ -68,9 +72,14 @@ int interpolate(int n0, int n1, int n2, Vec3f bary_coor)
 	return bary_coor.u * n0 + bary_coor.v * n1 + bary_coor.w * n2;
 }
 
-Vec3f transform(Vec3f p0, int c)
+float interpolate_f(float n0, float n1, float n2, Vec3f bary_coor)
 {
-	float array_m[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,-1.f/c,1 };
+	return (float)(bary_coor.u * n0 + bary_coor.v * n1 + bary_coor.w * n2);
+}
+
+Vec3f transform(Vec3f p0)
+{
+	float array_m[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,-1.f/camera.z,1 };
 	Matrix<float> transform_matrix(4, 4, array_m);
 
 	float fmp0[] = { p0.x,p0.y,p0.z,1 };

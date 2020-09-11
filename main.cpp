@@ -60,18 +60,18 @@ int main(int argc, char **argv)
 	Model object("obj/african_head.obj");
 	//object.Draw(WHITE);
 	object.LoadTexture("obj/african_head_diffuse.tga");
-	object.RenderInScence();
+	object.RenderShading();
 
-	//Matrix<int> m1(2, 2);
-	int m1a[] = { 1,2,3,4,5,6 };
-	Matrix<int> m1(3, 2, m1a);
+	////Matrix<int> m1(2, 2);
+	//int m1a[] = { 1,2,3,4,5,6 };
+	//Matrix<int> m1(3, 2, m1a);
 
-	int m2a[] = { 7,8,9,10,11,12 };
-	Matrix<int> m2(2, 3, m2a);
+	//int m2a[] = { 7,8,9,10,11,12 };
+	//Matrix<int> m2(2, 3, m2a);
 
-	Matrix<int> m3 = m1*m2;
+	//Matrix<int> m3 = m1*m2;
 
-	int a = m3[0][0];
+	//int a = m3[0][0];
 
 
     glutMainLoop();

@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 #include <array>
+#include "Matrix.h"
 #include "geometry.h"
 #include "tgaimage.h"
+
 
 class Model
 {
@@ -20,6 +22,12 @@ public:
 	void RenderTexture();
 
 	void RenderInScence();
+
+	void RenderShading();
+
+	void RenderFromLook();
+
+	void LookAt();
 
 private:
     struct face_t
@@ -39,11 +47,14 @@ private:
     std::vector<Vec3f> m_vert_spaces;
     std::vector<face_t> m_faces;
 
+	Matrix<int> ModelView;
+
     std::vector<std::string> extract_string(std::string, char);
 
 	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Color c);
 	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i vt2);
 	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, Vec2i vt0, Vec2i vt1, Vec2i vt2, float intensity);
+	void triangle(Vec3i p0, Vec3i p1, Vec3i p2, float intensity0, float intensity1, float intensity2);
 };
 
 #endif // !_MODEL_H_

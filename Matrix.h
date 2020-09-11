@@ -1,5 +1,5 @@
 #ifndef __MATRIX_H__
-#define __MATIX_H__
+#define __MATRIX_H__
 //#include <array>
 #include <assert.h>
 #include <iostream>
@@ -18,6 +18,7 @@ public:
 	inline const Matrix<T> operator=(const Matrix<T>& m0);
 	inline T* operator[] (unsigned int idx);
 	inline const Matrix<T> operator*(const Matrix<T>& m0);
+	inline void identity();
 private:
 	T **m_data;
 	unsigned int m_width, m_height;
@@ -98,6 +99,7 @@ inline const Matrix<T> Matrix<T>::operator=(const Matrix<T>& m0)
 			m_data[i][j] = m0.m_data[i][j];
 		}
 	}
+	return *this;
 }
 
 template <typename T>
@@ -125,6 +127,16 @@ inline const Matrix<T> Matrix<T>::operator*(const Matrix<T>& m0)
 	}
 
 	return r_matrix;
+}
+
+template <typename T>
+inline void Matrix<T>::identity()
+{
+	assert(m_width == m_height);
+	for (int i = 0; i < m_width; i++)
+	{
+		m_data[i][i] = T(1);
+	}
 }
 
 
