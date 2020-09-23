@@ -1,0 +1,20 @@
+﻿Build started 9/24/2020 12:15:49 AM.
+     1>Project "F:\VSPROJECT\TestPRJ\TestPRJ.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\TestPRJ.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /IF:\Games /ZI /JMC /nologo /W3 /WX- /diagnostics:classic /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:prompt TestPRJ.cpp
+         TestPRJ.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VSPROJECT\TestPRJ\Debug\TestPRJ.exe" /INCREMENTAL /NOLOGO "F:\LearningGL\TinyRenderer\glut-3.7.6-bin\glut32.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"F:\VSPROJECT\TestPRJ\Debug\TestPRJ.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VSPROJECT\TestPRJ\Debug\TestPRJ.lib" /MACHINE:X86 Debug\TestPRJ.obj
+         TestPRJ.vcxproj -> F:\VSPROJECT\TestPRJ\Debug\TestPRJ.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\TestPRJ.tlog\unsuccessfulbuild".
+         Touching "Debug\TestPRJ.tlog\TestPRJ.lastbuildstate".
+     1>Done Building Project "F:\VSPROJECT\TestPRJ\TestPRJ.vcxproj" (Build target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.61
