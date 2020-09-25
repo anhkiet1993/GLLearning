@@ -13,6 +13,9 @@ Vec3f eye(1, 1, 3);
 Vec3f center(0, 0, 0);
 Vec3f up(0, 0, 1);
 
+Matrix<float> ViewMatrix(4,4);
+Matrix<float> TranformationMatrix;
+
 void point(Point p)
 {
 	points.push_back(p);
@@ -104,4 +107,49 @@ void InitZbuffer()
             gZbuffer[i][j] = std::numeric_limits<int>::min();
         }
     }
+}
+
+void LookAt(Vec3f camera, Vec3f up, Vec3f root)
+{
+	ViewMatrix.identity();
+	Vec3f z = (camera - root).normalize();
+	Vec3f x = (up ^ z).normalize();
+	Vec3f y = (z ^ x).normalize();
+
+	Matrix<float> TR(4,4);
+	TR.identity();
+	TR[0][3] = -root.x;
+	TR[1][3] = -root.y;
+	TR[2][3] = -root.z;
+
+	Matrix<float> Minv(4,4);
+	Minv.identity();
+
+	Minv[0][0] = x.x;
+	Minv[0][1] = x.y;
+	Minv[0][2] = x.y;
+
+	Minv[1][0] = y.x;
+	Minv[1][1] = y.y;
+	Minv[1][2] = y.z;
+
+	Minv[2][0] = z.x;
+	Minv[2][1] = z.y;
+	Minv[2][2] = z.z;
+
+	Minv[3][3] = 1;
+	ViewMatrix = Minv*TR;	
+}
+
+void CalNormal(Vec3i normal)
+{
+
+}
+
+Vec3f TransformPoint(Vec3f point)
+{
+	float point_arr[] = {point.x, point.y, point.z,1};
+	Matrix<float> point_matrix(1, 4, point_arr );
+	Matrix<float> trpoint = ViewMatrix * point_matrix;
+	return Vec3f(trpoint[0][0]/trpoint[3][0], trpoint[1][0]/trpoint[3][0], trpoint[2][0]/trpoint[3][0]);
 }

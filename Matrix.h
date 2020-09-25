@@ -10,6 +10,7 @@ class Matrix
 public:
 	inline Matrix(unsigned int _w, unsigned int _h);
 	inline Matrix(unsigned int _w, unsigned int _h, T *input);
+	inline Matrix(unsigned int _w, unsigned int _h, T input[]);
 	inline Matrix();
 	inline Matrix(const Matrix<T> &m);
 
@@ -36,6 +37,21 @@ inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h) : m_width(_w), m_heig
 
 template <typename T>
 inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h, T *input) : m_width(_w), m_height(_h)
+{
+	m_data = new T*[m_height];
+
+	for (int i = 0; i < m_height; i++)
+	{
+		m_data[i] = new T[m_width];
+		for (int j = 0; j < m_width; j++)
+		{
+			m_data[i][j] = input[i*m_width + j];
+		}
+	}
+}
+
+template <typename T>
+inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h, T input[]) : m_width(_w), m_height(_h)
 {
 	m_data = new T*[m_height];
 
@@ -85,14 +101,14 @@ inline Matrix<T>::~Matrix()
 template <typename T>
 inline const Matrix<T> Matrix<T>::operator=(const Matrix<T>& m0)
 {
-	m_width = m0.m_width;
-	m_height = m0.m_height;
+	//m_width = m0.m_width;
+	//m_height = m0.m_height;
 
-	m_data = new T*[m_height];
+	//m_data = new T*[m_height];
 
 	for (int i = 0; i < m_height; i++)
 	{
-		m_data[i] = new T[m_width];
+		//m_data[i] = new T[m_width];
 
 		for (int j = 0; j < m_width; j++)
 		{
@@ -135,7 +151,19 @@ inline void Matrix<T>::identity()
 	assert(m_width == m_height);
 	for (int i = 0; i < m_width; i++)
 	{
-		m_data[i][i] = T(1);
+		for (int j = 0; j < m_height; j++)
+		{
+			if (i != j)
+			{
+				m_data[j][i] = T(0);
+			}
+			else
+			{
+				m_data[i][i] = T(1);
+			}
+			
+
+		}
 	}
 }
 

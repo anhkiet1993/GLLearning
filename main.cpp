@@ -60,7 +60,8 @@ int main(int argc, char **argv)
 	Model object("obj/african_head.obj");
 	//object.Draw(WHITE);
 	object.LoadTexture("obj/african_head_diffuse.tga");
-	object.RenderShading();
+    object.RenderFromLook();
+	//object.RenderShading();
 
 	////Matrix<int> m1(2, 2);
 	//int m1a[] = { 1,2,3,4,5,6 };

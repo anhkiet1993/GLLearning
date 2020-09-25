@@ -174,7 +174,22 @@ void Model::RenderShading()
 
 void Model::RenderFromLook()
 {
+	for (auto face : m_faces)
+	{
+		Vec3f trp0 = TransformPoint(Vec3f(m_verts[face.vert_idx[0] - 1].x, m_verts[face.vert_idx[0] - 1].y, m_verts[face.vert_idx[0] - 1].z));
+		Vec3f trp1 = TransformPoint(Vec3f(m_verts[face.vert_idx[1] - 1].x, m_verts[face.vert_idx[1] - 1].y, m_verts[face.vert_idx[1] - 1].z));
+		Vec3f trp2 = TransformPoint(Vec3f(m_verts[face.vert_idx[2] - 1].x, m_verts[face.vert_idx[2] - 1].y, m_verts[face.vert_idx[2] - 1].z));
 
+		Vec3i p0((trp0.x + 1) * 400, (trp0.y + 1) * 400, (trp0.z) * 400);
+		Vec3i p1((trp1.x + 1) * 400, (trp1.y + 1) * 400, (trp1.z) * 400);
+		Vec3i p2((trp2.x + 1) * 400, (trp2.y + 1) * 400, (trp2.z) * 400);
+
+		float intensity0 = m_vert_normals[face.norm_idx[0] - 1] * light_dir;
+		float intensity1 = m_vert_normals[face.norm_idx[1] - 1] * light_dir;
+		float intensity2 = m_vert_normals[face.norm_idx[2] - 1] * light_dir;
+		
+		triangle(p0, p1, p2, intensity0, intensity1, intensity2);
+	}
 }
 
 void Model::LookAt()
