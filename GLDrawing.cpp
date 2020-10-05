@@ -82,13 +82,13 @@ float interpolate_f(float n0, float n1, float n2, Vec3f bary_coor)
 
 Vec3f transform(Vec3f p0)
 {
-	float array_m[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,-1.f/camera.z,1 };
+	float array_m[] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -1.f / camera.z, 1};
 	Matrix<float> transform_matrix(4, 4, array_m);
 
-	float fmp0[] = { p0.x,p0.y,p0.z,1 };
+	float fmp0[] = {p0.x, p0.y, p0.z, 1};
 	Matrix<float> mp0(1, 4, fmp0);
 
-	Matrix<float>rel = transform_matrix*mp0;
+	Matrix<float> rel = transform_matrix * mp0;
 
 	Vec3f p_t(rel[0][0] / rel[3][0], rel[1][0] / rel[3][0], rel[2][0] / rel[3][0]);
 	//p_t.x = (float)p0.x / (1.f - (float)p0.z / c);
@@ -127,7 +127,7 @@ void LookAt(Vec3f camera, Vec3f up, Vec3f root)
 
 	Minv[0][0] = x.x;
 	Minv[0][1] = x.y;
-	Minv[0][2] = x.y;
+	Minv[0][2] = x.z;
 
 	Minv[1][0] = y.x;
 	Minv[1][1] = y.y;
@@ -148,8 +148,8 @@ void CalNormal(Vec3i normal)
 
 Vec3f TransformPoint(Vec3f point)
 {
-	float point_arr[] = {point.x, point.y, point.z,1};
-	Matrix<float> point_matrix(1, 4, point_arr );
+	float point_arr[] = {point.x, point.y, point.z, 1};
+	Matrix<float> point_matrix(1, 4, point_arr);
 	Matrix<float> trpoint = ViewMatrix * point_matrix;
-	return Vec3f(trpoint[0][0]/trpoint[3][0], trpoint[1][0]/trpoint[3][0], trpoint[2][0]/trpoint[3][0]);
+	return Vec3f(trpoint[0][0] / trpoint[3][0], trpoint[1][0] / trpoint[3][0], trpoint[2][0] / trpoint[3][0]);
 }

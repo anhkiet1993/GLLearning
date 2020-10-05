@@ -10,7 +10,7 @@ class Matrix
 public:
 	inline Matrix(unsigned int _w, unsigned int _h);
 	inline Matrix(unsigned int _w, unsigned int _h, T *input);
-	inline Matrix(unsigned int _w, unsigned int _h, T input[]);
+	//inline Matrix(unsigned int _w, unsigned int _h, T input[]);
 	inline Matrix();
 	inline Matrix(const Matrix<T> &m);
 
@@ -37,21 +37,6 @@ inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h) : m_width(_w), m_heig
 
 template <typename T>
 inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h, T *input) : m_width(_w), m_height(_h)
-{
-	m_data = new T*[m_height];
-
-	for (int i = 0; i < m_height; i++)
-	{
-		m_data[i] = new T[m_width];
-		for (int j = 0; j < m_width; j++)
-		{
-			m_data[i][j] = input[i*m_width + j];
-		}
-	}
-}
-
-template <typename T>
-inline Matrix<T>::Matrix(unsigned int _w, unsigned int _h, T input[]) : m_width(_w), m_height(_h)
 {
 	m_data = new T*[m_height];
 

@@ -59,9 +59,10 @@ int main(int argc, char **argv)
 
 	Model object("obj/african_head.obj");
 	//object.Draw(WHITE);
-	object.LoadTexture("obj/african_head_diffuse.tga");
+    LookAt(Vec3f(1000, 0, 0), Vec3f(0, 1, 0), Vec3f(0, 0, 0));
+    object.LoadTexture("obj/african_head_diffuse.tga");
     object.RenderFromLook();
-	//object.RenderShading();
+    //object.RenderShading();
 
 	////Matrix<int> m1(2, 2);
 	//int m1a[] = { 1,2,3,4,5,6 };
